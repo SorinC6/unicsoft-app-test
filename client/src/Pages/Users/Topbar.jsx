@@ -6,12 +6,15 @@ import { Chip, FormControl, Input, InputAdornment, Tooltip } from "@mui/material
 import { PiMagnifyingGlass } from "react-icons/pi";
 import { FiFilter } from "react-icons/fi";
 import CreateUser from "./CreateEmployee";
+import CreateClient from "./CreateClient";
 import Filter from "./Filter";
-import { searchUserReducer } from "../../redux/reducer/user";
+import { useDispatch } from "react-redux";
+import { searchEmployeeReducer, searchClientReducer } from "../../redux/reducer/user";
 
 const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
 
   ///////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const pathArr = pathname.split("/").filter((item) => item != "");
   const showClientTopBar = !pathArr.includes("employees");
@@ -24,6 +27,7 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
 
   ///////////////////////////////////////// STATES ///////////////////////////////////////////////////
   const [open, setOpen] = useState(false);
+  const [openCreateClient, setOpenCreateClient] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
   const [scroll, setScroll] = useState("paper");
 
@@ -38,9 +42,12 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
   }, [open]);
 
   ///////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////
-  const handleSearch = (searchTerm) => {
-    dispatch(searchUserReducer(searchTerm));
-  }
+  const handleEmployeeSearch = (e) => {
+    dispatch(searchEmployeeReducer(e.target.value));
+  };
+  const handleClientSearch = (e) => {
+    dispatch(searchClientReducer(e.target.value));
+  };
   const handleToggleFilters = () => {
     setOpenFilters((pre) => !pre);
   };
@@ -74,6 +81,7 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
                 <Input
                   name="search"
                   placeholder="Search Employees"
+                  onChange={handleEmployeeSearch}
                   startAdornment={
                     <InputAdornment position="start">
                       <PiMagnifyingGlass className="text-[25px]" />
@@ -112,6 +120,7 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
                   name="search"
                   fullWidth="true"
                   placeholder="Search Clients"
+                  onChange={handleClientSearch}
                   startAdornment={
                     <InputAdornment position="start">
                       <PiMagnifyingGlass className="text-[25px]" />
@@ -120,10 +129,18 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
                 />
               </FormControl>
             </div>
+            <Tooltip title="Add New Client" placement="top" arrow>
+              <div onClick={() => setOpenCreateClient(true)}>
+                <button className="bg-primary-red hover:bg-red-400 transition-all text-white w-[44px] h-[44px] flex justify-center items-center rounded-full shadow-xl">
+                  <Add />
+                </button>
+              </div>
+            </Tooltip>
           </div>
         )}
       </div>
       <CreateUser open={open} scroll={scroll} setOpen={setOpen} />
+      <CreateClient open={openCreateClient} scroll={scroll} setOpen={setOpenCreateClient} />
       <Filter open={openFilters} setOpen={setOpenFilters} setIsFiltered={setIsFiltered} />
     </div>
   );
