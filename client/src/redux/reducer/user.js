@@ -146,8 +146,8 @@ const usersSlice = createSlice({
             state.clients = filteredUsers;
         },
 
-        createClientReducer: (state, action) => { state.clients = [action.payload, ...state.clients] },
-        createEmployeeReducer: (state, action) => { state.employees = [action.payload, ...state.employees] },
+        createClientReducer: (state, action) => { state.clients = [action.payload, ...state.clients]; state.allClients = [action.payload, ...state.allClients] },
+        createEmployeeReducer: (state, action) => { state.employees = [action.payload, ...state.employees]; state.allEmployees = [action.payload, ...state.allEmployees] },
 
         updateUserReducer: (state, action) => {
             switch (action.payload.role) {

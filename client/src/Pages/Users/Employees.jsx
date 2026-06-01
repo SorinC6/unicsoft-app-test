@@ -106,9 +106,7 @@ const Employees = memo(() => {
 
   /////////////////////////////////////// USE EFFECTS ////////////////////////////////////
   useEffect(() => {
-    if (employees.length === 0) {
-      dispatch(getEmployees());
-    }
+    dispatch(getEmployees());
   }, []);
   useEffect(() => {
     if (!isFiltered) {
