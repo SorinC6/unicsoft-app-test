@@ -146,6 +146,9 @@ const Navbar = ({ setShowSidebar, showSidebar, open, setOpen }) => {
             <div>
               <p className="text-sky-400 text-xl gap-1 flex items-center">
                 <PiTimerLight className="text-[25px]" /> {date.toLocaleTimeString()}
+                <span style={{ fontSize: '0.75rem', color: '#475569', background: '#e2e8f0', padding: '2px 10px', borderRadius: '999px', fontWeight: 500 }}>
+                  {Intl.DateTimeFormat().resolvedOptions().timeZone}
+                </span>
               </p>
             </div>
           </div>
