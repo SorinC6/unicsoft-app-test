@@ -38,17 +38,24 @@ const CreateUser = ({ open, setOpen, scroll }) => {
 
   //////////////////////////////////////// STATES /////////////////////////////////////
   const [employeeData, setEmployeeData] = useState(initialEmployeeState);
+  const [errors, setErrors] = useState({});
 
   //////////////////////////////////////// USE EFFECTS /////////////////////////////////////
 
   //////////////////////////////////////// FUNCTIONS /////////////////////////////////////
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, username, password, phone, email } = employeeData
-    if (!firstName || !lastName || !username || !password || !phone  )
-      return alert("Make sure to provide all the fields")
+    const { firstName, lastName, username, password, phone } = employeeData;
+    const newErrors = {};
+    if (!firstName) newErrors.firstName = 'First name is required';
+    if (!lastName) newErrors.lastName = 'Last name is required';
+    if (!username) newErrors.username = 'Username is required';
+    if (!password) newErrors.password = 'Password is required';
+    if (!phone) newErrors.phone = 'Phone number is required';
+    if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
     dispatch(createEmployee(employeeData, setOpen));
-    setEmployeeData(initialEmployeeState)
+    setEmployeeData(initialEmployeeState);
+    setErrors({});
   };
 
   const handleChange = (field, value) => {
@@ -57,7 +64,8 @@ const CreateUser = ({ open, setOpen, scroll }) => {
 
   const handleClose = () => {
     setOpen(false);
-    setEmployeeData(initialEmployeeState)
+    setEmployeeData(initialEmployeeState);
+    setErrors({});
   };
 
   return (
@@ -87,34 +95,43 @@ const CreateUser = ({ open, setOpen, scroll }) => {
             <table className="mt-4">
               <tr>
                 <td className="pb-4 text-lg">First Name </td>
-                <td className="pb-4">
+                <td className="pb-6">
                   <TextField
                     size="small"
                     fullWidth
                     value={employeeData.firstName}
                     onChange={(e) => handleChange('firstName', e.target.value)}
+                    error={!!errors.firstName}
+                    helperText={errors.firstName}
+                    sx={{ '& .MuiFormHelperText-root': { position: 'absolute', bottom: '-18px', left: 0, margin: 0 } }}
                   />
                 </td>
               </tr>
               <tr>
                 <td className="pb-4 text-lg">Last Name </td>
-                <td className="pb-4">
+                <td className="pb-6">
                   <TextField
                     size="small"
                     fullWidth
                     value={employeeData.lastName}
                     onChange={(e) => handleChange('lastName', e.target.value)}
+                    error={!!errors.lastName}
+                    helperText={errors.lastName}
+                    sx={{ '& .MuiFormHelperText-root': { position: 'absolute', bottom: '-18px', left: 0, margin: 0 } }}
                   />
                 </td>
               </tr>
               <tr>
                 <td className="pb-4 text-lg">User Name </td>
-                <td className="pb-4">
+                <td className="pb-6">
                   <TextField
                     size="small"
                     fullWidth
                     value={employeeData.username}
                     onChange={(e) => handleChange('username', e.target.value)}
+                    error={!!errors.username}
+                    helperText={errors.username}
+                    sx={{ '& .MuiFormHelperText-root': { position: 'absolute', bottom: '-18px', left: 0, margin: 0 } }}
                   />
                 </td>
               </tr>
@@ -132,25 +149,31 @@ const CreateUser = ({ open, setOpen, scroll }) => {
               </tr>
               <tr>
                 <td className="flex items-start pt-2 text-lg">Password </td>
-                <td className="pb-4">
+                <td className="pb-6">
                   <TextField
                     type="password"
                     value={employeeData.password}
                     onChange={(e) => handleChange("password", e.target.value)}
                     size="small"
                     fullWidth
+                    error={!!errors.password}
+                    helperText={errors.password}
+                    sx={{ '& .MuiFormHelperText-root': { position: 'absolute', bottom: '-18px', left: 0, margin: 0 } }}
                   />
                 </td>
               </tr>
               <tr>
                 <td className="flex items-start pt-2 text-lg">Phone </td>
-                <td className="pb-4">
+                <td className="pb-6">
                   <TextField
                     type="number"
                     size="small"
                     value={employeeData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
                     fullWidth
+                    error={!!errors.phone}
+                    helperText={errors.phone}
+                    sx={{ '& .MuiFormHelperText-root': { position: 'absolute', bottom: '-18px', left: 0, margin: 0 } }}
                   />
                 </td>
               </tr>
