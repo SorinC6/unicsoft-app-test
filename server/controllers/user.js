@@ -97,7 +97,7 @@ export const getEmployeeClients = async (req, res, next) => {
 export const getEmployees = async (req, res, next) => {
     try {
 
-        const findedEmployees = await User.find({ role: 'employee' })
+        const findedEmployees = await User.find({ role: 'employee' }).sort({ createdAt: -1 })
         res.status(200).json({ result: findedEmployees, message: 'employees fetched seccessfully', success: true })
 
     } catch (err) {
