@@ -68,7 +68,7 @@ const EditModal = ({ open, setOpen }) => {
       maxWidth="sm"
       aria-describedby="alert-dialog-slide-description">
       <DialogTitle className="flex items-center justify-between">
-        <div className="text-sky-400 font-primary">Edit Employee</div>
+        <div className="text-sky-400 font-primary">Edit Details</div>
         <div className="cursor-pointer" onClick={handleClose}>
           <PiXLight className="text-[25px]" />
         </div>
@@ -111,7 +111,7 @@ const EditModal = ({ open, setOpen }) => {
                     fullWidth
                     placeholder="Optional"
                     value={employeeData?.email}
-                    onChange={(e) => handleChange('email', e.target.value)}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                   />
                 </td>
               </tr>
