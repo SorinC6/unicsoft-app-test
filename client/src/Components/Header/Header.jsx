@@ -272,12 +272,24 @@ const Header = () => {
             <Menu />
           </IconButton>
 
-          <Typography className="text-red-400" variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <Typography className="text-red-400" variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: '8px', flexGrow: 1 }}>
             <TimerOutlined sx={{ mb: '2px' }} />
             {date.toLocaleTimeString()}
-            <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 'normal' }}>
+            <Typography
+              component="span"
+              variant="body2"
+              sx={{
+                color: '#475569',
+                background: '#e2e8f0',
+                px: '10px',
+                py: '2px',
+                borderRadius: '999px',
+                fontWeight: 500,
+                fontSize: '0.8rem',
+                letterSpacing: '0.02em',
+              }}>
               {Intl.DateTimeFormat().resolvedOptions().timeZone}
-            </span>
+            </Typography>
           </Typography>
 
           <Tooltip title="Timer" arrow placement="bottom">
