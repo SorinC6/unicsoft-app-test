@@ -165,6 +165,7 @@ const Clients = () => {
   const [selectedUserId, setSelectedUserId] = useState("");
   const [openFilters, setOpenFilters] = useState("");
   const [openUser, setOpenUser] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   ////////////////////////////////////// USE EFFECTS ////////////////////////////////////
   useEffect(() => {
@@ -196,9 +197,18 @@ const Clients = () => {
       <Filter open={openFilters} setOpen={setOpenFilters} />
       <User open={openUser} setOpen={setOpenUser} />
 
-      <Topbar />
+      <Topbar onClientSearch={setSearchTerm} />
       <Table
-        rows={clients}
+        rows={clients.filter((c) => {
+          if (!searchTerm) return true;
+          const term = searchTerm.toLowerCase();
+          return (
+            `${c.firstName} ${c.lastName}`.toLowerCase().includes(term) ||
+            (c.username || "").toLowerCase().includes(term) ||
+            (c.email || "").toLowerCase().includes(term) ||
+            (c.phone || "").toLowerCase().includes(term)
+          );
+        })}
         columns={columns}
         isFetching={isFetching}
         error={error}

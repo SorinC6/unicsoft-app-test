@@ -103,6 +103,7 @@ const Employees = memo(() => {
   const [openFilters, setOpenFilters] = useState("");
   const [openView, setOpenViewk] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   /////////////////////////////////////// USE EFFECTS ////////////////////////////////////
   useEffect(() => {
@@ -139,10 +140,20 @@ const Employees = memo(() => {
         setOpenFilters={setOpenFilters}
         isFiltered={isFiltered}
         setIsFiltered={setIsFiltered}
+        onEmployeeSearch={setSearchTerm}
       />
 
       <Table
-        rows={employees}
+        rows={employees.filter((e) => {
+          if (!searchTerm) return true;
+          const term = searchTerm.toLowerCase();
+          return (
+            `${e.firstName} ${e.lastName}`.toLowerCase().includes(term) ||
+            (e.username || "").toLowerCase().includes(term) ||
+            (e.email || "").toLowerCase().includes(term) ||
+            (e.phone || "").toLowerCase().includes(term)
+          );
+        })}
         columns={columns}
         isFetching={isFetching}
         error={error}

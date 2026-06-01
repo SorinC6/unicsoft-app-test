@@ -9,9 +9,8 @@ import CreateUser from "./CreateEmployee";
 import CreateClient from "./CreateClient";
 import Filter from "./Filter";
 import { useDispatch } from "react-redux";
-import { searchEmployeeReducer, searchClientReducer } from "../../redux/reducer/user";
 
-const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
+const Topbar = ({ view, setView, setIsFiltered, isFiltered, onEmployeeSearch, onClientSearch }) => {
 
   ///////////////////////////////////////// VARIABLES ///////////////////////////////////////////////////
   const dispatch = useDispatch();
@@ -43,10 +42,10 @@ const Topbar = ({ view, setView, setIsFiltered, isFiltered }) => {
 
   ///////////////////////////////////////// FUNCTIONS ///////////////////////////////////////////////////
   const handleEmployeeSearch = (e) => {
-    dispatch(searchEmployeeReducer(e.target.value));
+    if (onEmployeeSearch) onEmployeeSearch(e.target.value);
   };
   const handleClientSearch = (e) => {
-    dispatch(searchClientReducer(e.target.value));
+    if (onClientSearch) onClientSearch(e.target.value);
   };
   const handleToggleFilters = () => {
     setOpenFilters((pre) => !pre);
